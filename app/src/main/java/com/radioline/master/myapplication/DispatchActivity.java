@@ -33,6 +33,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -217,12 +218,15 @@ public class DispatchActivity extends Activity implements CompoundButton.OnCheck
                     Order.addProperty("Description", "" + etComments.getText().toString());
                     SimpleDateFormat dateFormat = new SimpleDateFormat(
                             "yyyy-MM-dd'T'HH:mm:ss");
-                    Date nD = new Date();
-                    nD.setYear(dpDeliveryDate.getYear() - 1900);
-                    nD.setMonth(dpDeliveryDate.getMonth());
-                    nD.setDate(dpDeliveryDate.getDayOfMonth());
-                    String dd = dateFormat.format(nD);
-                    Order.addProperty("DeliveryDate", dd);
+                    int day = dpDeliveryDate.getDayOfMonth();
+                    int month = dpDeliveryDate.getMonth()+1;
+                    int year = dpDeliveryDate.getYear();
+                    //Date nD = new Date(dpDeliveryDate.getYear(),dpDeliveryDate.getMonth(),dpDeliveryDate.getDayOfMonth());
+                    //nD.setYear(dpDeliveryDate.getYear() - 1900);
+//                    nD.setMonth(dpDeliveryDate.getMonth());
+//                    nD.setDate(dpDeliveryDate.getDayOfMonth());
+                    //String dd = dateFormat.format(nD);
+                    //Order.addProperty("DeliveryDate", new GregorianCalendar(year,month, day));
 
                     //ArrayList<SoapObject> rowOrders = new ArrayList<SoapObject>();
                     SoapObject rowOrders = new SoapObject("http://www.rl.ua", "RowOrders");
