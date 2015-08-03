@@ -1,0 +1,37 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Login">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings" />
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="200"
+        android:showAsAction="always"
+        android:title="@string/action_search" />
+    <item
+        android:id="@+id/action_basket"
+        android:icon="@drawable/ic_emptybasket"
+        android:orderInCategory="300"
+        android:showAsAction="always"
+        android:title="@string/action_basket" />
+    <item
+        android:id="@+id/action_scan"
+        android:icon="@drawable/ic_barcode"
+        android:orderInCategory="400"
+        android:showAsAction="always"
+        android:title="@string/action_scan" />
+    <item
+        android:id="@+id/action_updateallimages"
+        android:orderInCategory="500"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_downloadallimages" />
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="600"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_refresh" />
+</menu>

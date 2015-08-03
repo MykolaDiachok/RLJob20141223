@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RL Price</string>
+    <string name="action_settings">Settings</string>
+    <string name="aboutNameGroup">Name</string>
+    <string name="tvAboutId">ID:</string>
+    <string name="tvAboutCode">Code:</string>
+    <string name="title_activity_second_group">Groups</string>
+    <string name="title_activity_item">Items</string>
+    <string name="tvLabalPartNumber">Part number:</string>
+    <string name="title_activity_pic">Picture</string>
+    <string name="ProgressDialogTitle">Loading</string>
+    <string name="ProgressDialogMessage">Loading, please wait..</string>
+    <string name="title_activity_image">Image</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_scan">Scan</string>
+    <string name="btScan">Scan</string>
+    <string name="action_scan">Scaning</string>
+    <string name="action_basket">Basket</string>
+    <string name="action_search">Search</string>
+    <string name="btAddItem">+</string>
+    <string name="btDel">-</string>
+    <string name="title_activity_basket">Basket</string>
+    <string name="action_clearBasket">Clear</string>
+    <string name="action_dispatch">Send to centre</string>
+    <string name="action_downloadallimages">Downloding images</string>
+    <string name="btSearchBarcode">Search</string>
+    <string name="title_activity_dispatch">Dispatch</string>
+    <string name="tvComments">Comments</string>
+    <string name="swCurrency">Currency</string>
+    <string name="btSendToServer">Send</string>
+    <string name="ProgressDialogTitleSending">Sending</string>
+    <string name="ProgressDialogMessageSending">Sending, please wait..</string>
+    <string name="NoConnect">Connection to the server is not possible, try again...</string>
+    <string name="title_activity_search">Search</string>
+    <string name="btSearchByName">Search</string>
+    <string name="etSearchByName">Input string for search</string>
+    <string name="tvDeliveryDate">Delivery date:</string>
+    <string name="hintetDeliveryDate">Input the date of delivery</string>
+    <string name="OrderSendGood">The current order has been successfully delivered!</string>
+    <string name="OrderSendBad">Failed to send the order, again later</string>
+    <string name="title_activity_login">Login</string>
+    <string name="tvUserId">User id:</string>
+    <string name="tvPasswordId">Password:</string>
+    <string name="btExit">Exit</string>
+    <string name="btLogin">Login</string>
+    <string name="NonLoginAndPassword">Please input login and password</string>
+    <string name="NoLogin">Input an incorrect login or password</string>
+    <string name="mint">3b65ddeb</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="tvURL">URL:</string>
+    <string name="NoData">Items not in stock</string>
+
+</resources>

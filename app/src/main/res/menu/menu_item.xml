@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.radioline.master.myapplication.ItemActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="200"
+        android:title="@string/action_search"
+        android:icon="@drawable/ic_search"
+        android:showAsAction="always" />
+    <item
+        android:id="@+id/action_basket"
+        android:orderInCategory="300"
+        android:title="@string/action_basket"
+        android:icon="@drawable/ic_emptybasket"
+        android:showAsAction="always" />
+    <item
+        android:id="@+id/action_scan"
+        android:orderInCategory="400"
+        android:showAsAction="always"
+        android:title="@string/action_scan"
+        android:icon="@drawable/ic_barcode" />
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="600"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_refresh" />
+</menu>

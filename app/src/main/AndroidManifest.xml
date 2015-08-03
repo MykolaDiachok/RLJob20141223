@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.radioline.master.myapplication"
+    android:installLocation="auto">
+
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="com.radioline.master.rlprice.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.radioline.master.rlprice.permission.C2D_MESSAGE" />
+
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.radioline.master.myapplication.FirstGroupActivity"
+
+            android:label="@string/app_name">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.radioline.master.myapplication.LoginActivity" />
+        </activity>
+        <activity
+            android:name="com.radioline.master.myapplication.SecondGroupActivity"
+            android:label="@string/title_activity_second_group"
+            android:parentActivityName="com.radioline.master.myapplication.FirstGroupActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.radioline.master.myapplication.FirstGroupActivity" />
+        </activity>
+        <activity
+            android:name="com.radioline.master.myapplication.ItemActivity"
+            android:label="@string/title_activity_item"
+            android:parentActivityName="com.radioline.master.myapplication.SecondGroupActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.radioline.master.myapplication.SecondGroupActivity" />
+        </activity>
+        <activity
+            android:name="com.radioline.master.myapplication.PicActivity"
+            android:label="@string/title_activity_pic"
+            android:parentActivityName="com.radioline.master.myapplication.ItemActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.radioline.master.myapplication.ItemActivity" />
+        </activity>
+        <activity
+            android:name="com.radioline.master.myapplication.ScanActivity"
+            android:icon="@drawable/ic_barcode"
+            android:label="@string/title_activity_scan" />
+        <activity
+            android:name="com.radioline.master.myapplication.BasketActivity"
+            android:label="@string/title_activity_basket" />
+        <activity
+            android:name="com.radioline.master.myapplication.DispatchActivity"
+            android:icon="@drawable/ic_send"
+            android:label="@string/title_activity_dispatch"
+            android:parentActivityName="com.radioline.master.myapplication.BasketActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.radioline.master.myapplication.BasketActivity" />
+        </activity>
+        <activity
+            android:name="com.radioline.master.myapplication.SearchActivity"
+            android:icon="@drawable/ic_search"
+            android:label="@string/title_activity_search" />
+        <activity
+            android:name="com.radioline.master.myapplication.LoginActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.parse.PushService" />
+        <receiver android:name="com.parse.ParseBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.radioline.master.rlprice" />
+
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.radioline.master.basic.Receiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.OPEN" />
+                <action android:name="com.parse.push.intent.DELETE" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.parse.push.notification_icon"
+            android:resource="@drawable/ic_launcher" />
+    </application>
+
+</manifest>
