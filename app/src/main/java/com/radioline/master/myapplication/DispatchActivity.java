@@ -159,12 +159,27 @@ public class DispatchActivity extends Activity implements CompoundButton.OnCheck
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btSendToServer:
-                SentToServer();
+                int day = dpDeliveryDate.getDayOfMonth();
+                int month = dpDeliveryDate.getMonth()+1;
+                int year = dpDeliveryDate.getYear();
+                GregorianCalendar gC = new GregorianCalendar(year,month, day);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat(
+                        "yyyy-MM-dd'T'HH:mm:ss");
+
+                //Date nD = new Date(year,month,day);
+                //nD.setYear(dpDeliveryDate.getYear() - 1900);
+//                    nD.setMonth(dpDeliveryDate.getMonth());
+//                    nD.setDate(dpDeliveryDate.getDayOfMonth());
+                String dd = dateFormat.format(gC.getTime());
+
+
+                SentToServer(dd);
                 break;
         }
     }
 
-    private void SentToServer() {
+    private void SentToServer(final String tempDate) {
         //Method SetOrder
         //Input Order
         /* ***************order***********
@@ -216,17 +231,8 @@ public class DispatchActivity extends Activity implements CompoundButton.OnCheck
                     Order.addProperty("ContractId", rtvalue); // Основной договор
                     Order.addProperty("NewOrder", true);
                     Order.addProperty("Description", "" + etComments.getText().toString());
-                    SimpleDateFormat dateFormat = new SimpleDateFormat(
-                            "yyyy-MM-dd'T'HH:mm:ss");
-                    int day = dpDeliveryDate.getDayOfMonth();
-                    int month = dpDeliveryDate.getMonth()+1;
-                    int year = dpDeliveryDate.getYear();
-                    //Date nD = new Date(dpDeliveryDate.getYear(),dpDeliveryDate.getMonth(),dpDeliveryDate.getDayOfMonth());
-                    //nD.setYear(dpDeliveryDate.getYear() - 1900);
-//                    nD.setMonth(dpDeliveryDate.getMonth());
-//                    nD.setDate(dpDeliveryDate.getDayOfMonth());
-                    //String dd = dateFormat.format(nD);
-                    //Order.addProperty("DeliveryDate", new GregorianCalendar(year,month, day));
+
+                    Order.addProperty("DeliveryDate", tempDate);
 
                     //ArrayList<SoapObject> rowOrders = new ArrayList<SoapObject>();
                     SoapObject rowOrders = new SoapObject("http://www.rl.ua", "RowOrders");
