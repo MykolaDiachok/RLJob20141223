@@ -7,13 +7,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.radioline.master.basic.Basket;
 import com.radioline.master.basic.BasketViewAdapter;
-import com.splunk.mint.Mint;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class BasketActivity extends Activity {
@@ -21,23 +23,45 @@ public class BasketActivity extends Activity {
     //private ParseQueryAdapter<ParseObject> mainAdapter;
     private ListView lvBasket;
     private BasketViewAdapter basketViewAdapter;
+    private ArrayList<Basket> itemArray = new ArrayList<Basket>();
 
 
     @Override
     protected void onResume() {
-        Mint.startSession(this);
-        basketViewAdapter.notifyDataSetChanged();
-        basketViewAdapter.loadObjects();
-        lvBasket.setAdapter(basketViewAdapter);
-        basketViewAdapter.loadObjects();
+//        Mint.startSession(this);
+
+
+        //basketViewAdapter.notifyDataSetChanged();
+//        basketViewAdapter.loadObjects();
+
+//        basketViewAdapter.loadObjects();
         super.onResume();
+    }
+
+    private void loadDataFromBase() {
+        ParseQuery query = Basket.getQuery();
+        query.fromLocalDatastore();
+        query.whereGreaterThan("quantity", 0);
+        query.findInBackground(new FindCallback<Basket>() {
+                                           @Override
+                                           public void done(List<Basket> list, ParseException e) {
+
+                                                   itemArray.clear();
+                                                   for (Basket i:list){
+                                                       itemArray.add(i);
+                                                   }
+                                                    //itemArray = (ArrayList<Basket>)list;
+                                               basketViewAdapter = new BasketViewAdapter(BasketActivity.this,itemArray);
+                                                lvBasket.setAdapter(basketViewAdapter);
+                                           }
+                                       });
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Mint.closeSession(this);
-        Mint.flush();
+//        Mint.closeSession(this);
+//        Mint.flush();
     }
 
 
@@ -45,7 +69,7 @@ public class BasketActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Mint.initAndStartSession(this, getString(R.string.mint));
+     //   Mint.initAndStartSession(this, getString(R.string.mint));
 
         ParseObject.registerSubclass(Basket.class);
         //ParseObject.registerSubclass(ParseGroups.class);
@@ -56,11 +80,12 @@ public class BasketActivity extends Activity {
         setContentView(R.layout.activity_basket);
 
 
-        basketViewAdapter = new BasketViewAdapter(this);
+        //basketViewAdapter = new BasketViewAdapter(this);
         lvBasket = (ListView) findViewById(R.id.lvBasket);
+        loadDataFromBase();
         //if((basketViewAdapter!=null)&&(!basketViewAdapter.isEmpty())) {
-        lvBasket.setAdapter(basketViewAdapter);
-        basketViewAdapter.loadObjects();
+        //lvBasket.setAdapter(basketViewAdapter);
+        //basketViewAdapter.loadObjects();
         //}
 
 
@@ -103,8 +128,7 @@ public class BasketActivity extends Activity {
                 rtvalue = true;
                 break;
             case R.id.action_refresh:
-                basketViewAdapter.notifyDataSetChanged();
-                basketViewAdapter.loadObjects();
+                loadDataFromBase();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

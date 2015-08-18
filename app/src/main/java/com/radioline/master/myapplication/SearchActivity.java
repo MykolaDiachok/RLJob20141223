@@ -19,7 +19,7 @@ import com.radioline.master.basic.ItemViewAdapter;
 import com.radioline.master.basic.SystemService;
 import com.radioline.master.myapplication.R;
 import com.radioline.master.soapconnector.Converts;
-import com.splunk.mint.Mint;
+
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -45,14 +45,12 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
     @Override
     protected void onResume() {
         super.onResume();
-        Mint.startSession(this);
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Mint.closeSession(this);
-        Mint.flush();
         if ((t != null) && (t.isAlive())) {
             t.interrupt();
         }
@@ -62,7 +60,7 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        Mint.initAndStartSession(this, getString(R.string.mint));
+
 
         lvSearchByName = (ListView) findViewById(R.id.lvSearchByName);
         lvSearchByName.setOnItemClickListener(this);

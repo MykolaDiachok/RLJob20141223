@@ -18,7 +18,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.radioline.master.basic.Group;
 import com.radioline.master.basic.GroupViewAdapter;
-import com.splunk.mint.Mint;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +39,13 @@ public class SecondGroupActivity extends Activity implements AdapterView.OnItemC
     @Override
     protected void onResume() {
         super.onResume();
-        Mint.startSession(this);
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Mint.closeSession(this);
-        Mint.flush();
+
         if ((t != null) && (t.isAlive())) {
             t.interrupt();
         }
@@ -57,7 +56,7 @@ public class SecondGroupActivity extends Activity implements AdapterView.OnItemC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Mint.initAndStartSession(this, getString(R.string.mint));
+
         //Mint.enableDebug();
 
         setContentView(R.layout.activity_secondgroup);

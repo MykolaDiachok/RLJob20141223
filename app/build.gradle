@@ -6,15 +6,15 @@ android {
         config {
         }
     }
-    compileSdkVersion 21
-    buildToolsVersion '21.1.2'
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
     defaultConfig {
         applicationId "com.radioline.master.rlprice"
         minSdkVersion 16
         targetSdkVersion 21
-        versionName '1.8.30'
+        versionName '1.8.31'
         signingConfig signingConfigs.config
-        versionCode 30
+        versionCode 31
     }
     buildTypes {
         release {
@@ -38,28 +38,18 @@ repositories {
     }
 }
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
-    // Supports Android 4.0.3 and later (API level 15)
-    // Supports Android 2.1 and later (API level 7), but not optimal for later Android versions.
-    // If you only plan on supporting Android 4.0.3 and up, you don't need to include this.
-    // Convenience library to launch the scanning and encoding Activities.
-    // It automatically picks the best scanning library from the above two, depending on the
-    // Android version and what is available.
-    // Version 3.0.x of zxing core contains some code that is not compatible on Android 2.2 and earlier.
-    // This mostly affects encoding, but you should test if you plan to support these versions.
-    // Older versions e.g. 2.2 may also work if you need support for older Android versions.
-    compile files('libs/Parse-1.8.0/bolts-android-1.1.4.jar')
-    compile files('libs/Parse-1.8.0/Parse-1.8.0.jar')
-    compile files('libs/Parse-1.8.0/ParseCrashReporting-1.8.0.jar')
-    compile 'com.splunk.mint:mint:4.0.7'
-    compile 'com.embarkmobile:zxing-android-minimal:2.0.0@aar'
-    compile 'com.embarkmobile:zxing-android-legacy:2.0.0@aar'
-    compile 'com.embarkmobile:zxing-android-integration:2.0.0@aar'
-    compile 'com.google.zxing:core:3.0.1'
+    // compile fileTree(include: ['*.jar'], dir: 'libs')
+    //compile files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
+    compile files('libs/ksoap2-android-assembly-3.4.0-jar-with-dependencies.jar')
+    compile 'com.journeyapps:zxing-android-embedded:3.0.1@aar'
+    compile 'com.google.zxing:core:3.2.0'
+    //
     compile 'com.badoo.mobile:android-weak-handler:1.0'
     compile 'com.google.android.gms:play-services-identity:7.3.0'
     compile 'com.google.android.gms:play-services-gcm:7.3.0'
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile fileTree(include: 'Parse-*.jar', dir: 'libs/Parse-1.10.0')
+    compile files('libs/Parse-1.10.0/ParseCrashReporting-1.10.0.jar')
 }
 
 buildscript {

@@ -17,7 +17,7 @@ import com.radioline.master.basic.Item;
 import com.radioline.master.basic.SystemService;
 import com.radioline.master.soapconnector.Converts;
 import com.radioline.master.soapconnector.ImageDownloaderSOAP;
-import com.splunk.mint.Mint;
+
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -40,14 +40,13 @@ public class PicActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Mint.startSession(this);
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Mint.closeSession(this);
-        Mint.flush();
+
         if ((t != null) && (t.isAlive())) {
             t.interrupt();
         }
@@ -57,7 +56,7 @@ public class PicActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Mint.initAndStartSession(this, getString(R.string.mint));
+
         //Mint.enableDebug();
 
         setContentView(R.layout.activity_pic);

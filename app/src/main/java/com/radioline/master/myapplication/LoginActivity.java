@@ -17,7 +17,7 @@ import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.radioline.master.basic.BaseValues;
-import com.splunk.mint.Mint;
+
 
 public class LoginActivity extends Activity {
 
@@ -29,20 +29,19 @@ public class LoginActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        Mint.closeSession(this);
-        Mint.flush();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Mint.startSession(this);
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mint.initAndStartSession(this, getString(R.string.mint));
+
         //Mint.enableDebug();
         setContentView(R.layout.activity_login);
 

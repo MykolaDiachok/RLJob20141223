@@ -23,7 +23,6 @@ import com.radioline.master.basic.BaseValues;
 import com.radioline.master.basic.Basket;
 import com.radioline.master.basic.SystemService;
 import com.radioline.master.soapconnector.Link;
-import com.splunk.mint.Mint;
 
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
@@ -51,20 +50,16 @@ public class DispatchActivity extends Activity implements CompoundButton.OnCheck
     @Override
     protected void onStop() {
         super.onStop();
-        Mint.closeSession(this);
-        Mint.flush();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Mint.startSession(this);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mint.initAndStartSession(this, "3b65ddeb");
         ParseObject.registerSubclass(Basket.class);
         //ParseObject.registerSubclass(ParseGroups.class);
         //Parse.enableLocalDatastore(getApplicationContext());

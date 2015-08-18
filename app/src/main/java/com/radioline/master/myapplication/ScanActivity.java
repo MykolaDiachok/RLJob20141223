@@ -20,7 +20,7 @@ import com.radioline.master.basic.Item;
 import com.radioline.master.basic.ItemViewAdapter;
 import com.radioline.master.basic.SystemService;
 import com.radioline.master.soapconnector.Converts;
-import com.splunk.mint.Mint;
+
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -44,20 +44,19 @@ public class ScanActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        Mint.startSession(this);
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Mint.closeSession(this);
-        Mint.flush();
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mint.initAndStartSession(this, getString(R.string.mint));
+
         //Mint.enableDebug();
 
 

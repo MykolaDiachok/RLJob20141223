@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 public class ItemViewAdapter extends ArrayAdapter<Item> {
 
-    private final ArrayList<Item> itemArrayList;
+    private ArrayList<Item> itemArrayList;
     Context context;
 
 
@@ -49,6 +49,7 @@ public class ItemViewAdapter extends ArrayAdapter<Item> {
             holder = new ViewHolder();
             holder.tvItemName = (TextView) rowView.findViewById(R.id.tvItemName);
             holder.tvItemUSD = (TextView) rowView.findViewById(R.id.tvItemUSD);
+            holder.tvQuantity = (TextView) rowView.findViewById(R.id.tvQuantity);
             holder.tvItemUAH = (TextView) rowView.findViewById(R.id.tvItemUAH);
             holder.ivItem = (ImageView) rowView.findViewById(R.id.ivItem);
             holder.btAdd = (Button) rowView.findViewById(R.id.btAdd);
@@ -58,25 +59,46 @@ public class ItemViewAdapter extends ArrayAdapter<Item> {
         } else {
             holder = (ViewHolder) rowView.getTag();
         }
-        this.setOnClickListener(holder.btAdd, itemArrayList.get(position));
-        this.setOnClickListener(holder.btDel, itemArrayList.get(position));
-        this.setOnClickListener(holder.ivItem, itemArrayList.get(position));
-        holder.tvItemName.setText(itemArrayList.get(position).getName());
+        Item curObject = itemArrayList.get(position);
+        this.setOnClickListener(holder.btAdd, curObject, rowView);
+        this.setOnClickListener(holder.btDel, curObject, rowView);
+        this.setOnClickListener(holder.ivItem, curObject,rowView);
+        holder.tvItemName.setText(curObject.getName());
 
 
         DecimalFormat dec = new DecimalFormat("0.00");
 
-        holder.tvItemUSD.setText("$ " + dec.format(itemArrayList.get(position).getPrice()));
-        holder.tvItemUAH.setText("₴ " + dec.format(itemArrayList.get(position).getPriceUAH()));
+        holder.tvItemUSD.setText("$ " + dec.format(curObject.getPrice()));
+        holder.tvItemUAH.setText("₴ " + dec.format(curObject.getPriceUAH()));
+        Integer cQuantity = getQuantity(curObject);
+        if ((cQuantity!=null)&&(cQuantity>0)){
+        holder.tvQuantity.setText("Quantity:" + String.valueOf(cQuantity));}
 
         ImageDownloaderSOAP getimage = new ImageDownloaderSOAP();
-        getimage.download(itemArrayList.get(position).getId(), holder.ivItem, null, false);
+        getimage.download(curObject.getId(), holder.ivItem, null, false);
 
         return rowView;
 
     }
 
-    private void delItem(Item finalitem) {
+    private Integer getQuantity(Item item){
+        ParseQuery<Basket> query = Basket.getQuery();
+        query.fromLocalDatastore();
+        query.whereGreaterThan("quantity", 0);
+        query.whereEqualTo("productId",item.getId());
+        try {
+            Basket tBasket = query.getFirst();
+            return (Integer)tBasket.getQuantity();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+    private void delItem(Item finalitem,View view) {
+        ViewHolder holder = (ViewHolder) view.getTag();
+
         ParseQuery<Basket> query = Basket.getQuery();
         query.fromLocalDatastore();
         query.whereEqualTo("productId", finalitem.getId());
@@ -84,21 +106,24 @@ public class ItemViewAdapter extends ArrayAdapter<Item> {
         try {
             Basket localbasket = query.getFirst();
             currentcount = localbasket.getQuantity() - 1;
-            if (currentcount < 0) {
+            if (currentcount <= 0) {
                 currentcount = 0;
                 localbasket.unpin();
+                holder.tvQuantity.setText("");
             } else {
                 localbasket.setQuantity(currentcount);
                 localbasket.pin();
+                holder.tvQuantity.setText("Quantity:" + String.valueOf(currentcount));
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        Toast.makeText(context, "del: " + finalitem.getName() + "-1=" + currentcount, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(context, "del: " + finalitem.getName() + "-1=" + currentcount, Toast.LENGTH_SHORT).show();
     }
 
-    private void addItem(Item finalitem) {
+    private void addItem(Item finalitem,View view) {
+        ViewHolder holder = (ViewHolder) view.getTag();
         //int pos = Integer.parseInt(v.getTag().toString());
         //Item finalitem = itemArrayList.get(pos);
         ParseQuery<Basket> query = Basket.getQuery();
@@ -124,11 +149,11 @@ public class ItemViewAdapter extends ArrayAdapter<Item> {
                 e1.printStackTrace();
             }
         }
-
-        Toast.makeText(context, "add: " + finalitem.getName() + "+1=" + currentcount, Toast.LENGTH_SHORT).show();
+        holder.tvQuantity.setText("Quantity:" + String.valueOf(currentcount));
+       // Toast.makeText(context, "add: " + finalitem.getName() + "+1=" + currentcount, Toast.LENGTH_SHORT).show();
     }
 
-    private void setOnClickListener(View view, final Item finalitem) {
+    private void setOnClickListener(View view,final Item finalitem,final View rowView) {
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,10 +166,10 @@ public class ItemViewAdapter extends ArrayAdapter<Item> {
                         context.startActivity(intent);
                         break;
                     case R.id.btAdd:
-                        addItem(finalitem);
+                        addItem(finalitem,rowView);
                         break;
                     case R.id.btDel:
-                        delItem(finalitem);
+                        delItem(finalitem,rowView);
                         break;
                 }
 
@@ -156,6 +181,7 @@ public class ItemViewAdapter extends ArrayAdapter<Item> {
         public TextView tvItemName;
         public TextView tvItemUSD;
         public TextView tvItemUAH;
+        public TextView tvQuantity;
         public ImageView ivItem;
         public Button btAdd;
         public Button btDel;

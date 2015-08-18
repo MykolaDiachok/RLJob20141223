@@ -18,7 +18,7 @@ import com.parse.ParseQuery;
 import com.radioline.master.basic.Group;
 import com.radioline.master.basic.GroupViewAdapter;
 import com.radioline.master.soapconnector.MultiLoadingImage;
-import com.splunk.mint.Mint;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,22 +39,18 @@ public class FirstGroupActivity extends Activity implements AdapterView.OnItemCl
     @Override
     protected void onResume() {
         super.onResume();
-        Mint.startSession(this);
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Mint.closeSession(this);
-        Mint.flush();
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Mint.initAndStartSession(this, getString(R.string.mint));
-
 
         setContentView(R.layout.activity_firstgroup);
         listView = (ListView) findViewById(R.id.listView);
