@@ -17,6 +17,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.ExecutionException;
 
+import hugo.weaving.DebugLog;
+
 import static java.util.Collections.sort;
 
 /**
@@ -28,6 +30,7 @@ public class Converts {
     LinkAsyncTaskGetSoapObject linkAsync;
     LinkAsyncTaskGetSoapPrimitive linkAsyncTaskGetSoapPrimitive;
 
+    @DebugLog
     public Group[] getGroupsFromServer() throws ExecutionException, InterruptedException {
         final String method_name = "GetAllGroups";
 
@@ -48,6 +51,7 @@ public class Converts {
         return Groups;
     }
 
+    @DebugLog
     public ArrayList<Group> getGroupsArrayListFromServer() throws ExecutionException, InterruptedException {
         final String method_name = "GetGroups";
 
@@ -83,7 +87,7 @@ public class Converts {
         return Groups;
     }
 
-
+    @DebugLog
     public ArrayList<Group> getGroupsArrayListFromServerWithoutAsync() throws ExecutionException, InterruptedException {
         final String method_name = "GetGroups";
 
@@ -121,7 +125,7 @@ public class Converts {
         return Groups;
     }
 
-
+    @DebugLog
     public ArrayList<Group> getGroupsArrayListFromServer(String IdGroup) throws ExecutionException, InterruptedException {
         final String method_name = "GetGroups";
 
@@ -159,7 +163,7 @@ public class Converts {
         return null;
     }
 
-
+    @DebugLog
     public ArrayList<Group> getGroupsArrayListFromServerWithoutAsync(String IdGroup) throws ExecutionException, InterruptedException {
         final String method_name = "GetGroups";
 
@@ -194,11 +198,12 @@ public class Converts {
         return Groups;
     }
 
-
+    @DebugLog
     public ArrayList<Item> getItemsArrayListFromServer(String IdGroup) throws ExecutionException, InterruptedException {
         return getItemsArrayListFromServer(IdGroup, false);
     }
 
+    @DebugLog
     public ArrayList<Item> getItemsArrayListFromServer(String IdGroup, Boolean full) throws ExecutionException, InterruptedException {
         final String method_name = "GetPriceUseParentGroup";
 
@@ -250,7 +255,7 @@ public class Converts {
         return Items;
     }
 
-
+    @DebugLog
     public ArrayList<Item> getItemsArrayListFromServerWithoutAsync(String IdGroup, Boolean full) throws ExecutionException, InterruptedException {
         final String method_name = "GetPriceUseParentGroup";
 
@@ -310,6 +315,7 @@ public class Converts {
     /*
     Don't use this method, not working SOAP call
     */
+    @DebugLog
     public ArrayList<Item> getAllItemsArrayListFromServer(Boolean full) throws ExecutionException, InterruptedException {
         final String method_name = "GetAllItemPrice";
 
@@ -350,6 +356,7 @@ public class Converts {
     /*
         Don't use this method, not working SOAP call
         */
+    @DebugLog
     public ArrayList<Item> getAllItemsArrayListFromServerWithOutAsync(Boolean full) throws ExecutionException, InterruptedException {
         final String method_name = "GetAllItemPrice";
 
@@ -389,7 +396,7 @@ public class Converts {
         return Items;
     }
 
-
+    @DebugLog
     public ArrayList<Item> getItemsArrayListFromServerWithBarcode(String barcode, Boolean full) throws ExecutionException, InterruptedException {
         final String method_name = "GetPriceOnBarCode";
 
@@ -436,7 +443,7 @@ public class Converts {
         return Items;
     }
 
-
+    @DebugLog
     public ArrayList<Item> getItemsArrayListFromServerSearchByName(String SubString, Boolean full) throws ExecutionException, InterruptedException {
         final String method_name = "GetPriceOnSearchName";
 
@@ -490,7 +497,7 @@ public class Converts {
         return arrayItems;
     }
 
-
+    @DebugLog
     public Bitmap getBitMapFromServer(String idItem) throws ExecutionException, InterruptedException {
         final String method_name = "GetPNG";
 
@@ -511,7 +518,7 @@ public class Converts {
 
     }
 
-
+    @DebugLog
     public Bitmap getBitMapFromServer(String idItem, int Height, int Width, int Quality, Boolean HardCompression) throws ExecutionException, InterruptedException {
         final String method_name = "GetPNGWithSize";
 

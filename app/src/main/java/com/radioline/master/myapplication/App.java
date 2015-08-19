@@ -1,6 +1,7 @@
 package com.radioline.master.myapplication;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -15,6 +16,7 @@ import com.radioline.master.basic.ParseSetting;
 
 public class App extends Application {
 
+    private static Context mContext;
     /**
      * The Analytics singleton. The field is set in onCreate method override when the application
      * class is initially created.
@@ -48,9 +50,16 @@ public class App extends Application {
         return tracker;
     }
 
+    public static Context getContext() {
+        return mContext;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mContext = getApplicationContext();
+
         ParseCrashReporting.enable(this);
         Parse.enableLocalDatastore(this);
 
