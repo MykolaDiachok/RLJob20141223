@@ -44,12 +44,19 @@
     <string name="tvUserId">User id:</string>
     <string name="tvPasswordId">Password:</string>
     <string name="btExit">Exit</string>
-    <string name="btLogin">Login</string>
     <string name="NonLoginAndPassword">Please input login and password</string>
     <string name="NoLogin">Input an incorrect login or password</string>
     <string name="mint">3b65ddeb</string>
     <string name="action_refresh">Refresh</string>
     <string name="tvURL">URL:</string>
     <string name="NoData">Items not in stock</string>
+
+    <string name="tvID">user Id:</string>
+    <string name="tvPassword">Password:</string>
+    <string name="btLogin">Login</string>
+    <string name="inputId">Please input ID</string>
+    <string name="logocontentDescription">RadioLine</string>
+    <string name="hintInputPassword">Please input password</string>
+    <string name="noconnection">no internet connection</string>
 
 </resources>

@@ -1,5 +1,9 @@
 package com.radioline.master.basic;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
@@ -46,5 +50,21 @@ public class BaseValues {
             e.printStackTrace();
         }
     }
+
+    public static String GetValue(String key,Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(key, "");
+
+    }
+
+
+    public static void SetValue(String Key, String Value,Context context) {
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putString(Key, Value);
+        prefs.commit();
+    }
+
+
 
 }

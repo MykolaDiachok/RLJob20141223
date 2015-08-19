@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android'
+apply plugin: 'com.jakewharton.hugo'
+apply plugin: 'com.parse'
+
+
 
 android {
     signingConfigs {
@@ -39,7 +43,6 @@ repositories {
 }
 dependencies {
     // compile fileTree(include: ['*.jar'], dir: 'libs')
-    //compile files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
     compile files('libs/ksoap2-android-assembly-3.4.0-jar-with-dependencies.jar')
     compile 'com.journeyapps:zxing-android-embedded:3.0.1@aar'
     compile 'com.google.zxing:core:3.2.0'
@@ -50,6 +53,10 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(include: 'Parse-*.jar', dir: 'libs/Parse-1.10.0')
     compile files('libs/Parse-1.10.0/ParseCrashReporting-1.10.0.jar')
+    //butterknife
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+    compile 'com.google.android.gms:play-services:7.8.0'
 }
 
 buildscript {
@@ -61,10 +68,12 @@ buildscript {
     }
     dependencies {
         classpath 'com.parse.tools:gradle:1.+'
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1' //https://github.com/JakeWharton/hugo
+
     }
 }
 
-apply plugin: 'com.parse'
+
 
 parse {
     applicationId "5pOXIrqgAidVKFx2mWnlMHj98NPYqbR37fOEkuuY"
