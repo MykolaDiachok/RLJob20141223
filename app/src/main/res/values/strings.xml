@@ -58,5 +58,15 @@
     <string name="logocontentDescription">RadioLine</string>
     <string name="hintInputPassword">Please input password</string>
     <string name="noconnection">no internet connection</string>
+    <string name="title_activity_default">DefaultActivity</string>
+
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+
+    <string name="activity_detail_title">DetailActivity</string>
+
+    <string name="drawer_switch">SwitchSample</string>
+    <string name="drawer_opensource">Open Source</string>
 
 </resources>
