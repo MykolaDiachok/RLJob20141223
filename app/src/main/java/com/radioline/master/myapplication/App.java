@@ -12,6 +12,7 @@ import com.parse.ParseCrashReporting;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.radioline.master.basic.Basket;
+import com.radioline.master.basic.Group;
 import com.radioline.master.basic.ParseSetting;
 
 public class App extends Application {
@@ -64,6 +65,7 @@ public class App extends Application {
         Parse.enableLocalDatastore(this);
 
         ParseObject.registerSubclass(Basket.class);
+        ParseObject.registerSubclass(Group.class);
         ParseObject.registerSubclass(ParseSetting.class);
 
         Parse.initialize(this, "5pOXIrqgAidVKFx2mWnlMHj98NPYqbR37fOEkuuY", "oZII0CmkEklLvOvUQ64CQ6i4QjOzBIEGZfbXvYMG");

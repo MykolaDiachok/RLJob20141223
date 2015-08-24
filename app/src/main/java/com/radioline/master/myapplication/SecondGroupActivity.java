@@ -142,13 +142,12 @@ public class SecondGroupActivity extends Activity implements AdapterView.OnItemC
 
             groups = new ArrayList<Group>();
             try {
-                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ParseGroups");
+                ParseQuery<Group> query =Group.getQuery();
                 query.whereEqualTo("parentid", getIntent().getStringExtra("parentid"));
                 query.orderByAscending("sortcode");
-                ob = query.find();
-                for (ParseObject pgroup : ob) {
-                    Group map = new Group(pgroup);
-                    groups.add(map);
+                List<Group> ob = query.find();
+                for (Group pgroup : ob) {
+                    groups.add(pgroup);
                 }
             } catch (ParseException e) {
                 Log.e("Error", e.getMessage());

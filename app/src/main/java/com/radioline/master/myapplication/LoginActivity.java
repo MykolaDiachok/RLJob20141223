@@ -80,10 +80,10 @@ public class LoginActivity extends Activity {
             tvLoginInfo.setTextColor(Color.BLUE);
         }
         if (connection){
-            ibtNetworkInfo.setImageDrawable(getResources().getDrawable(R.drawable.greenbutton));
+            ibtNetworkInfo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.greenbutton));
         }
         else{
-            ibtNetworkInfo.setImageDrawable(getResources().getDrawable(R.drawable.redbutton));
+            ibtNetworkInfo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.redbutton));
             Toast.makeText(LoginActivity.this, "Unable to connect to the internet"
                     , Toast.LENGTH_LONG).show();
         }
@@ -95,6 +95,7 @@ public class LoginActivity extends Activity {
     protected void onDestroy() {
         CancelProgressDialog();
         super.onDestroy();
+        //ButterKnife.unbind(this);
     }
 
     public void CancelProgressDialog(){
@@ -192,7 +193,8 @@ public class LoginActivity extends Activity {
                     ParseUser.getCurrentUser().increment("RunCount");
                     ParseUser.getCurrentUser().saveInBackground();
 
-                    Intent intent = new Intent(LoginActivity.this, FirstGroupActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, DefaultActivity.class);
+                    //Intent intent = new Intent(LoginActivity.this, FirstGroupActivity.class);
                     startActivity(intent);
                 } else {
                     if (!TestNetworks.getInstance(LoginActivity.this).isOnline())
@@ -222,6 +224,12 @@ public class LoginActivity extends Activity {
         });
     }
 
+//    @DebugLog
+//    @OnClick(R.id.btLogin2)
+//    public void onClickbtLogin2(){
+//        Intent intent = new Intent(LoginActivity.this, DefaultActivity.class);
+//        startActivity(intent);
+//    }
 
     private void updateUI(Intent intent) {
         if (TestNetworks.getInstance(this).isOnline()){

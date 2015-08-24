@@ -69,4 +69,7 @@
     <string name="drawer_switch">SwitchSample</string>
     <string name="drawer_opensource">Open Source</string>
 
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -32,7 +32,6 @@ public class FirstGroupActivity extends Activity implements AdapterView.OnItemCl
     private ListView listView;
     private GroupViewAdapter groupViewAdapter;
     private ProgressDialog mProgressDialog;
-    private List<ParseObject> ob;
     private List<Group> groups = null;
 
 
@@ -134,13 +133,13 @@ public class FirstGroupActivity extends Activity implements AdapterView.OnItemCl
 
             groups = new ArrayList<Group>();
             try {
-                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ParseGroups");
+                ParseQuery<Group> query = Group.getQuery();//new ParseQuery<ParseObject>("ParseGroups");
+                //query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
                 query.whereEqualTo("parentid", "00000000-0000-0000-0000-000000000000");
                 query.orderByAscending("sortcode");
-                ob = query.find();
-                for (ParseObject pgroup : ob) {
-                    Group map = new Group(pgroup);
-                    groups.add(map);
+                List<Group> groupList  = query.find();
+                for (Group pgroup : groupList) {
+                    groups.add(pgroup);
                 }
             } catch (ParseException e) {
                 Log.e("Error", e.getMessage());
