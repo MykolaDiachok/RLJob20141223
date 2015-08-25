@@ -41,9 +41,9 @@ public class GroupsFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-//        getListView().setItemChecked(position, true);
-//        getListView().setSelection(position);
-//        getListView().setSelected(true);
+        getListView().setItemChecked(position, true);
+        getListView().setSelection(position);
+        getListView().setSelected(true);
         Log.e("GroupsFragmentClick",position + " " + id);
     }
 
@@ -61,7 +61,8 @@ public class GroupsFragment extends ListFragment {
         //View view = inflater.inflate(R.layout.fragment_groups, container, false);
         View view = super.onCreateView(inflater, container, savedInstanceState);
         this.inflater = inflater;
-        view.setSelected(true);
+        //getListView().setSelector(R.drawable.level_list_selector);
+       // view.setSelected(true);
         //getListView().setItemChecked(0, true);
 //        groupArrayList = new ArrayList<Group>();
 //        groupViewAdapter = new GroupViewAdapter(inflater.getContext(),groupArrayList);
@@ -87,11 +88,20 @@ public class GroupsFragment extends ListFragment {
         return view;
     }
 
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //getListView().setSelector(R.drawable.level_list_selector);
+    }
+
     public void refreshData(ArrayList<Group> data) {
         if (data!=null){
             groupArrayList = new ArrayList<Group>(data);
             groupViewAdapter = new GroupViewAdapter(inflater.getContext(),groupArrayList);
-            setListAdapter(groupViewAdapter);}
+            setListAdapter(groupViewAdapter);
+            getListView().setItemChecked(0, true);
+        }
     }
 
 
