@@ -24,80 +24,54 @@ import com.radioline.master.myapplication.R;
 
 public class DefaultActivity extends AppCompatActivity {
 
+    //save our header or result
     private Drawer result = null;
-
-    public static enum MenuDrawer {
-        NEWS,
-        EXCHANGE,
-        GROUPS,
-        ITEMS,
-        BASKET,
-        SEARCH,
-        SCAN
-    };
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private GroupsFragment groupsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_default);
+
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("RadioLine");
 
+        fragmentManager = getSupportFragmentManager();
+        groupsFragment = new GroupsFragment();
+
         //Create the drawer
-        DrawerBuilder drawerBuilder = new DrawerBuilder(this);
-        drawerBuilder.withActivity(this);
-        drawerBuilder.withRootView(R.id.drawer_container);
-        drawerBuilder.withToolbar(toolbar);
-        drawerBuilder.withActionBarDrawerToggleAnimated(true);
-        drawerBuilder.addDrawerItems(
-                new PrimaryDrawerItem().withName("News").withIdentifier(MenuDrawer.NEWS.ordinal()),
-                new PrimaryDrawerItem().withName("Exchange").withIdentifier(MenuDrawer.EXCHANGE.ordinal()),
-                new DividerDrawerItem(),
-                new PrimaryDrawerItem().withName("Groups").withIdentifier(MenuDrawer.GROUPS.ordinal()),
-                new PrimaryDrawerItem().withName("Items").withIdentifier(MenuDrawer.ITEMS.ordinal()),
-                new PrimaryDrawerItem().withName("Basket").withIdentifier(MenuDrawer.BASKET.ordinal()),
-                new DividerDrawerItem(),
+        result = new DrawerBuilder(this)
+                //this layout have to contain child layouts
+                .withRootView(R.id.drawer_container)
+                .withToolbar(toolbar)
+                .withActionBarDrawerToggleAnimated(true)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("Groups")
+//                        new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad),
+//                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye),
+//                        new SectionDrawerItem().withName(R.string.drawer_item_section_header),
+//                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog),
+//                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withEnabled(false),
+//                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github),
+//                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem != null && drawerItem instanceof Nameable) {
+                            fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.fragment_container,groupsFragment);
 
-                new PrimaryDrawerItem().withName("Search").withIdentifier(MenuDrawer.SEARCH.ordinal()),
-                new PrimaryDrawerItem().withName("Scan").withIdentifier(MenuDrawer.SCAN.ordinal())
+                            fragmentTransaction.commit();
+                        }
 
-        ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-            @Override
-            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-
-                if (drawerItem != null) {
-                    if (drawerItem instanceof Nameable) {
-                        String name = ((Nameable) drawerItem).getName().getText(DefaultActivity.this);
-                        getSupportActionBar().setTitle(name);
+                        return false;
                     }
-                }
-
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                Fragment fragment = new Fragment();
-                MenuDrawer curIndef = MenuDrawer.values()[drawerItem.getIdentifier()];
-                switch (curIndef)
-                {
-                    case NEWS:
-                        //fragment = new LibraryFragment();
-                        break;
-                    case EXCHANGE:
-                        //fragment = new AddBookFragment();
-                        break;
-                    case GROUPS:
-                        fragment = new GroupsFragment();
-                        break;
-                }
-
-                transaction.replace(R.id.fragment_container, fragment,"groups");
-                transaction.commit();
-
-                return false;
-
-            }
-        })
+                })
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
                     @Override
                     public void onDrawerOpened(View drawerView) {
@@ -113,13 +87,13 @@ public class DefaultActivity extends AppCompatActivity {
                     public void onDrawerSlide(View drawerView, float slideOffset) {
 
                     }
-                });
-
-        drawerBuilder.withSavedInstance(savedInstanceState);
-        drawerBuilder.build();
-
+                })
+                .withFireOnInitialOnClick(true)
+                .withSavedInstance(savedInstanceState)
+                .build();
+        //react on the keyboard
+        result.keyboardSupportEnabled(this, true);
     }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -137,5 +111,4 @@ public class DefaultActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
 }

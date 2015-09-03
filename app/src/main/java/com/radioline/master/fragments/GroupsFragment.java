@@ -28,81 +28,59 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class GroupsFragment extends ListFragment {
+public class GroupsFragment extends Fragment {
+    @Bind(R.id.listView)
+    ListView listView;
 
-
-
-
-    private ProgressDialog mProgressDialog;
     private GroupViewAdapter groupViewAdapter;
-    private ArrayList<Group> groupArrayList;
-    private LayoutInflater inflater;
+    private ProgressDialog mProgressDialog;
 
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        getListView().setItemChecked(position, true);
-        getListView().setSelection(position);
-        getListView().setSelected(true);
-        Log.e("GroupsFragmentClick",position + " " + id);
-    }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //View view = inflater.inflate(R.layout.fragment_groups, container, false);
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        this.inflater = inflater;
-        //getListView().setSelector(R.drawable.level_list_selector);
-       // view.setSelected(true);
-        //getListView().setItemChecked(0, true);
-//        groupArrayList = new ArrayList<Group>();
-//        groupViewAdapter = new GroupViewAdapter(inflater.getContext(),groupArrayList);
-//        setListAdapter(groupViewAdapter);
-//            try {
-//                ParseQuery<Group> query = Group.getQuery();
-//                query.whereEqualTo("parentid", "00000000-0000-0000-0000-000000000000");
-//                query.orderByAscending("sortcode");
-//                List<Group> groupList = query.find();
-//                groupArrayList.addAll(groupList);
-//                groupViewAdapter = new GroupViewAdapter(inflater.getContext(),groupArrayList);
-//                setListAdapter(groupViewAdapter);
-////                for (Group pgroup : groupList) {
-////                    tGroupArrayList.add(pgroup);
-////                }
-//            } catch (ParseException e) {
-//                Log.e("Error", e.getMessage());
-//                e.printStackTrace();
-//            }
+//        // Inflate the layout for this fragment
+//        //View view = inflater.inflate(R.layout.fragment_groups, container, false);
+//        View view = super.onCreateView(inflater, container, savedInstanceState);
+//        this.inflater = inflater;
+//        //getListView().setSelector(R.drawable.level_list_selector);
+//       // view.setSelected(true);
+//        //getListView().setItemChecked(0, true);
+////        groupArrayList = new ArrayList<Group>();
+////        groupViewAdapter = new GroupViewAdapter(inflater.getContext(),groupArrayList);
+////        setListAdapter(groupViewAdapter);
+////            try {
+////                ParseQuery<Group> query = Group.getQuery();
+////                query.whereEqualTo("parentid", "00000000-0000-0000-0000-000000000000");
+////                query.orderByAscending("sortcode");
+////                List<Group> groupList = query.find();
+////                groupArrayList.addAll(groupList);
+////                groupViewAdapter = new GroupViewAdapter(inflater.getContext(),groupArrayList);
+////                setListAdapter(groupViewAdapter);
+//////                for (Group pgroup : groupList) {
+//////                    tGroupArrayList.add(pgroup);
+//////                }
+////            } catch (ParseException e) {
+////                Log.e("Error", e.getMessage());
+////                e.printStackTrace();
+////            }
+//
+//
+//   //          new RemoteDataTask().execute();
+//        return view;
+        //return inflater.inflate(R.layout.fragment_groups,null);
 
-
-             new RemoteDataTask().execute();
+        View view = inflater.inflate(R.layout.fragment_groups, container, false);
+        ButterKnife.bind(this, view);
+        // TODO Use fields...
         return view;
     }
 
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        //getListView().setSelector(R.drawable.level_list_selector);
-    }
-
-    public void refreshData(ArrayList<Group> data) {
-        if (data!=null){
-            groupArrayList = new ArrayList<Group>(data);
-            groupViewAdapter = new GroupViewAdapter(inflater.getContext(),groupArrayList);
-            setListAdapter(groupViewAdapter);
-            getListView().setItemChecked(0, true);
-        }
-    }
 
 
 
@@ -149,7 +127,7 @@ public class GroupsFragment extends ListFragment {
             //(GroupsFragment)GroupsFragment.this.getActivity().getSupportFragmentManager().findFragmentByTag("groups");
 
             if (resultFrag != null) {
-                resultFrag.refreshData(tGroupArrayList);
+//                resultFrag.refreshData(tGroupArrayList);
             }
 
 //            // Pass the results into ListViewAdapter.java
