@@ -64,7 +64,7 @@ public class DefaultActivity extends AppCompatActivity {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem != null && drawerItem instanceof Nameable) {
                             fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.fragment_container,groupsFragment);
+                            fragmentTransaction.replace(R.id.fragment_container,groupsFragment,"groups");
 
                             fragmentTransaction.commit();
                         }

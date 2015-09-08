@@ -25,8 +25,10 @@ import com.parse.ParseConfig;
 import com.parse.ParseException;
 import com.parse.ParsePush;
 import com.parse.ParseUser;
+import com.parse.PushService;
 import com.parse.SaveCallback;
 import com.radioline.master.basic.BaseValues;
+import com.radioline.master.basic.Caches;
 import com.radioline.master.tools.DisplayOrientation;
 import com.radioline.master.tools.TestNetworks;
 
@@ -192,6 +194,9 @@ public class LoginActivity extends Activity {
 
                     ParseUser.getCurrentUser().increment("RunCount");
                     ParseUser.getCurrentUser().saveInBackground();
+
+//                    Caches.clearCaches();
+//                    Caches.cacheGroups();
 
                     Intent intent = new Intent(LoginActivity.this, DefaultActivity.class);
                     //Intent intent = new Intent(LoginActivity.this, FirstGroupActivity.class);

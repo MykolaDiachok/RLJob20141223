@@ -72,30 +72,45 @@ public class GroupViewAdapter extends ArrayAdapter<Group> {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        ViewHolder holder;
 
-        if (view != null) {
-            holder = (ViewHolder) view.getTag();
-        } else {
-            view = inflater.inflate(resources, parent, false);
-            holder = new ViewHolder(view);
-            view.setTag(holder);
+        Group tempGroup = groupArrayList.get(position);
+
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rowView;
+        if (!"00000000-0000-0000-0000-000000000000".equals(tempGroup.getParentid())) {
+            rowView = inflater.inflate(R.layout.groupview_second, parent, false);
         }
+        else {
+            rowView = inflater.inflate(resources, parent, false);
+        }
+        TextView textView = (TextView) rowView.findViewById(R.id.tvName);
+        textView.setText(tempGroup.getName());
+        return rowView;
 
-        holder.tvName.setText(groupArrayList.get(position).getName());
-
-
-
-//        if (view == null) {
-//            holder = new ViewHolder();
-//            view = inflater.inflate(R.layout.groupview, null);
-//            holder.tvName = (TextView) view.findViewById(R.id.tvName);
-//            view.setTag(holder);
-//        } else {
+//        ViewHolder holder;
+//
+//        Group tempGroup = groupArrayList.get(position);
+//
+//        if (view != null) {
 //            holder = (ViewHolder) view.getTag();
+//        } else {
+//            if (!"00000000-0000-0000-0000-000000000000".equals(tempGroup.getParentid())) {
+//                view = inflater.inflate(R.layout.groupview_second, parent, false);
+//            }
+//            else{
+//                view = inflater.inflate(resources, parent, false);
+//            }
+//
+//            holder = new ViewHolder(view);
+//            view.setTag(holder);
 //        }
-//        holder.tvName.setText(groupArrayList.get(position).getName());
-        return view;
+//
+//        holder.tvName.setText(tempGroup.getName());
+//
+//
+//
+//        return view;
     }
 
     static class ViewHolder {

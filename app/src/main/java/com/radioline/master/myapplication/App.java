@@ -6,14 +6,22 @@ import android.content.Intent;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseCrashReporting;
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.radioline.master.basic.Basket;
+import com.radioline.master.basic.Caches;
 import com.radioline.master.basic.Group;
 import com.radioline.master.basic.ParseSetting;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class App extends Application {
 
@@ -62,7 +70,9 @@ public class App extends Application {
         mContext = getApplicationContext();
 
         ParseCrashReporting.enable(this);
-        Parse.enableLocalDatastore(this);
+        //Parse.enableLocalDatastore(this); //disable local store for caches
+        
+        ParseQuery.clearAllCachedResults();
 
         ParseObject.registerSubclass(Basket.class);
         ParseObject.registerSubclass(Group.class);
@@ -93,6 +103,8 @@ public class App extends Application {
 
         // Enable automatic activity tracking for your app
         tracker.enableAutoActivityTracking(true);
+
+
 
     }
 }

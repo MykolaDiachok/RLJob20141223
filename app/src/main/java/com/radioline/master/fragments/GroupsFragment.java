@@ -2,6 +2,7 @@ package com.radioline.master.fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -17,25 +18,40 @@ import android.widget.ListView;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.radioline.master.basic.AsyncTaskCompleteListener;
 import com.radioline.master.basic.Group;
 import com.radioline.master.basic.GroupViewAdapter;
 import com.radioline.master.myapplication.R;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import hugo.weaving.DebugLog;
 
 
-public class GroupsFragment extends Fragment {
+public class GroupsFragment extends Fragment  {
     @Bind(R.id.listView)
     ListView listView;
 
     private GroupViewAdapter groupViewAdapter;
     private ProgressDialog mProgressDialog;
 
+    public class GroupsAsyncTaskCompleteListener implements AsyncTaskCompleteListener<ArrayList<Group>>
+    {
 
+        @Override
+        public void onTaskComplete(ArrayList<Group> result)
+        {
+            groupViewAdapter = new GroupViewAdapter(getActivity(),result);
+//            // Binds the Adapter to the ListView
+            listView.setAdapter(groupViewAdapter);
+        }
+    }
 
 
 
@@ -43,97 +59,84 @@ public class GroupsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        //View view = inflater.inflate(R.layout.fragment_groups, container, false);
-//        View view = super.onCreateView(inflater, container, savedInstanceState);
-//        this.inflater = inflater;
-//        //getListView().setSelector(R.drawable.level_list_selector);
-//       // view.setSelected(true);
-//        //getListView().setItemChecked(0, true);
-////        groupArrayList = new ArrayList<Group>();
-////        groupViewAdapter = new GroupViewAdapter(inflater.getContext(),groupArrayList);
-////        setListAdapter(groupViewAdapter);
-////            try {
-////                ParseQuery<Group> query = Group.getQuery();
-////                query.whereEqualTo("parentid", "00000000-0000-0000-0000-000000000000");
-////                query.orderByAscending("sortcode");
-////                List<Group> groupList = query.find();
-////                groupArrayList.addAll(groupList);
-////                groupViewAdapter = new GroupViewAdapter(inflater.getContext(),groupArrayList);
-////                setListAdapter(groupViewAdapter);
-//////                for (Group pgroup : groupList) {
-//////                    tGroupArrayList.add(pgroup);
-//////                }
-////            } catch (ParseException e) {
-////                Log.e("Error", e.getMessage());
-////                e.printStackTrace();
-////            }
-//
-//
-//   //          new RemoteDataTask().execute();
-//        return view;
-        //return inflater.inflate(R.layout.fragment_groups,null);
 
         View view = inflater.inflate(R.layout.fragment_groups, container, false);
         ButterKnife.bind(this, view);
-        // TODO Use fields...
+        //new RemoteDataTask().execute();
+        new RemoteDataTask(this.getActivity(),new GroupsAsyncTaskCompleteListener()).execute();
         return view;
     }
 
 
 
-
-
     // RemoteDataTask AsyncTask
-    private class RemoteDataTask extends AsyncTask<Void, Void, Void> {
+    private class RemoteDataTask extends AsyncTask<Void, Void, ArrayList<Group>> {
         private ArrayList<Group> tGroupArrayList;
+        private Context context;
+        private AsyncTaskCompleteListener<ArrayList<Group>> listener;
+
+        public RemoteDataTask(Context ctx, AsyncTaskCompleteListener<ArrayList<Group>> listener)
+        {
+            this.context = ctx;
+            this.listener = listener;
+        }
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setTitle(getString(R.string.ProgressDialogMessage));
-            mProgressDialog.setMessage(getString(R.string.ProgressDialogTitle));
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.show();
+//            mProgressDialog = new ProgressDialog(getActivity());
+//            mProgressDialog.setTitle(getString(R.string.ProgressDialogMessage));
+//            mProgressDialog.setMessage(getString(R.string.ProgressDialogTitle));
+//            mProgressDialog.setIndeterminate(false);
+//            mProgressDialog.show();
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        @DebugLog
+        protected ArrayList<Group> doInBackground(Void... params) {
 
             tGroupArrayList = new ArrayList<Group>();
             try {
                 ParseQuery<Group> query = Group.getQuery();
-                query.whereEqualTo("parentid", "00000000-0000-0000-0000-000000000000");
+                query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+                query.whereEqualTo("firstGroup", true);
+                query.whereEqualTo("Enable", true);
                 query.orderByAscending("sortcode");
                 List<Group> groupList = query.find();
                 for (Group pgroup : groupList) {
                     tGroupArrayList.add(pgroup);
+                    Group newGroup = new Group();
+
+
+                    ParseQuery<Group> queryChild = Group.getQuery();
+                    query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+                    queryChild.whereEqualTo("parseGroupId", pgroup);
+                    queryChild.whereEqualTo("Enable", true);
+                    queryChild.orderByAscending("sortcode");
+                    List<Group> groupListChild = queryChild.find();
+                    for (Group pgroupChild : groupListChild) {
+                        tGroupArrayList.add(pgroupChild);
+                    }
+
                 }
+
             } catch (ParseException e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
-            return null;
+            return tGroupArrayList;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-
-//            GroupsFragment resultFrag = (GroupsFragment) getSupportFragmentManager()
-//                    .findFragmentByTag("groups");
-            GroupsFragment resultFrag = (GroupsFragment) getFragmentManager().findFragmentByTag("groups");
-            //(GroupsFragment)GroupsFragment.this.getActivity().getSupportFragmentManager().findFragmentByTag("groups");
-
-            if (resultFrag != null) {
-//                resultFrag.refreshData(tGroupArrayList);
-            }
-
+        protected void onPostExecute(ArrayList<Group> groups) {
+            super.onPostExecute(groups);
+            listener.onTaskComplete(groups);
 //            // Pass the results into ListViewAdapter.java
-//            groupViewAdapter = new GroupViewAdapter(getActivity(),groupArrayList);
+            //groupViewAdapter = new GroupViewAdapter(getActivity(),tGroupArrayList);
 //            // Binds the Adapter to the ListView
-//            bGetGroups.setAdapter(groupViewAdapter);
+            //listView.setAdapter(groupViewAdapter);
 //            // Close the progressdialog
             if (mProgressDialog!=null)
             mProgressDialog.dismiss();
