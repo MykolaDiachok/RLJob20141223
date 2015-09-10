@@ -12,6 +12,7 @@ import com.radioline.master.fragments.GroupsFragment;
 import com.radioline.master.myapplication.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.Bind;
@@ -26,7 +27,6 @@ public class GroupViewAdapter extends ArrayAdapter<Group> {
     //private List<Group> groups = null;
     private LayoutInflater inflater;
     int resources;
-
 
 
 
@@ -78,7 +78,7 @@ public class GroupViewAdapter extends ArrayAdapter<Group> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView;
-        if (!"00000000-0000-0000-0000-000000000000".equals(tempGroup.getParentid())) {
+        if (!tempGroup.getBoolean("firstGroup")) {
             rowView = inflater.inflate(R.layout.groupview_second, parent, false);
         }
         else {
@@ -95,18 +95,14 @@ public class GroupViewAdapter extends ArrayAdapter<Group> {
 //        if (view != null) {
 //            holder = (ViewHolder) view.getTag();
 //        } else {
-//            if (!"00000000-0000-0000-0000-000000000000".equals(tempGroup.getParentid())) {
-//                view = inflater.inflate(R.layout.groupview_second, parent, false);
-//            }
-//            else{
-//                view = inflater.inflate(resources, parent, false);
-//            }
-//
-//            holder = new ViewHolder(view);
+//            view = inflater.inflate(resources, parent, false);
+//            holder = new ViewHolder(view,tempGroup);
 //            view.setTag(holder);
 //        }
 //
-//        holder.tvName.setText(tempGroup.getName());
+//
+//
+//    holder.tvName.setText(tempGroup.getName());
 //
 //
 //
@@ -115,8 +111,17 @@ public class GroupViewAdapter extends ArrayAdapter<Group> {
 
     static class ViewHolder {
         @Bind(R.id.tvName) TextView tvName;
-        public ViewHolder(View view) {
+        public ViewHolder(View view, Group tGroup) {
             ButterKnife.bind(this, view);
+//            if (!tGroup.getBoolean("firstGroup")) {
+//                tvName.setPadding(50,0,0,0);
+//                tvName.setTextSize(12);
+//            }
+//            else
+//            {
+//                tvName.setTextSize(15);
+//            }
+
         }
         // public TextView tvId;
         //public TextView tvCode;
